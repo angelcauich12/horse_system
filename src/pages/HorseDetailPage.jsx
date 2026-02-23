@@ -179,13 +179,22 @@ const HorseDetailPage = () => {
 
             {/* Pedigree Section */}
             {horse.pedigree && (
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }} 
-                animate={{ opacity: 1, y: 0 }} 
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="mt-16"
               >
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b pb-4">Genealogía y Pedigree</h2>
+
+                <div className="mb-12 bg-white rounded-xl shadow-lg overflow-hidden">
+                  <img
+                    src="/image.png"
+                    alt={`Diagrama de descendencia de ${horse.name}`}
+                    className="w-full h-auto"
+                  />
+                </div>
+
                 <PedigreeTable pedigree={horse.pedigree} />
               </motion.div>
             )}
