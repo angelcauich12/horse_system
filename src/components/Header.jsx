@@ -22,7 +22,7 @@ const Header = () => {
             </svg>
 
             <span className="text-sm md:text-base font-serif font-bold tracking-[0.3em] uppercase text-black">
-              Hacienda Yokdzonot
+              Horses For Sport International
             </span>
           </Link>
 

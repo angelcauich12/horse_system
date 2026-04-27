@@ -56,7 +56,7 @@ const Footer = ({ horseName = "Orion" }) => {
 
           {/* Logo Estilo Stitch */}
           <div className="text-lg font-serif font-bold tracking-[0.4em] uppercase text-black">
-            Hacienda Yokdzonot
+            Horses For Sport International
           </div>
 
           {/* Nav Links Minimalistas */}
