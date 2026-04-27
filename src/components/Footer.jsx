@@ -74,7 +74,7 @@ const Footer = ({ horseName = "Orion" }) => {
 
           {/* Copyright */}
           <div className="text-[10px] tracking-[0.1em] uppercase text-slate-300">
-            © {currentYear} HACIENDA YOKDZONOT. ALL RIGHTS RESERVED.
+            © {currentYear} Horses For Sport International. ALL RIGHTS RESERVED.
           </div>
         </div>
 
