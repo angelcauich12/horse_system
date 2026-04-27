@@ -44,7 +44,7 @@ const Footer = ({ horseName = "Orion" }) => {
               <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-slate-900 group-hover:border-slate-900 transition-all duration-300">
                 <Mail size={18} className="text-slate-600 group-hover:text-white" />
               </div>
-              <span className="text-sm font-bold tracking-[0.2em] text-slate-800 uppercase">
+              <span className="text-sm font-bold tracking-[0.2em] text-slate-800 ">
                 stoholder@gmail.com
               </span>
             </a>
