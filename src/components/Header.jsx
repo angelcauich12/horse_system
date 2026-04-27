@@ -1,71 +1,40 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Rabbit as Horse } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const navLinks = [{
-    path: '/',
-    label: 'Home'
-  }, {
-    path: '/catalogo',
-    label: 'Catálogo'
-  }, {
-    path: '/contacto',
-    label: 'Contacto'
-  }];
-  const isActive = path => location.pathname === path;
-  return <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-md">
-      <nav className="container mx-auto px-4 py-4">
+  return (
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-gray-100">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-6">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <Horse className="w-8 h-8 text-amber-700 group-hover:text-amber-800 transition-colors" />
-            <span className="text-2xl font-bold text-amber-900 group-hover:text-amber-800 transition-colors">Hacienda Yokdzonot
-          </span>
+
+          {/* Logo y Nombre con estilo Stitch */}
+          <Link to="/" className="flex items-center gap-3 group">
+            {/* Icono minimalista (Símbolo de la persona/jinete) */}
+            <svg
+              width="14"
+              height="24"
+              viewBox="0 0 14 24"
+              fill="currentColor"
+              className="text-black"
+            >
+              <circle cx="7" cy="3" r="2.5" />
+              <path d="M7 6.5c-2.5 0-4.5 2-4.5 4.5v5h2v6h5v-6h2v-5c0-2.5-2-4.5-4.5-4.5z" />
+            </svg>
+
+            <span className="text-sm md:text-base font-serif font-bold tracking-[0.3em] uppercase text-black">
+              Hacienda Yokdzonot
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => <Link key={link.path} to={link.path} className={`text-lg font-medium transition-all relative ${isActive(link.path) ? 'text-amber-700' : 'text-gray-700 hover:text-amber-700'}`}>
-                {link.label}
-                {isActive(link.path) && <motion.div layoutId="activeNav" className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-700" transition={{
-              type: 'spring',
-              stiffness: 380,
-              damping: 30
-            }} />}
-              </Link>)}
+          {/* Espacio vacío (ya que quitamos el View Catalogue) */}
+          <div className="hidden md:block">
+            {/* Aquí podrías poner un botón de menú minimalista si lo necesitas luego */}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-gray-700 hover:text-amber-700 transition-colors" aria-label="Toggle menu">
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {mobileMenuOpen && <motion.div initial={{
-          opacity: 0,
-          height: 0
-        }} animate={{
-          opacity: 1,
-          height: 'auto'
-        }} exit={{
-          opacity: 0,
-          height: 0
-        }} transition={{
-          duration: 0.3
-        }} className="md:hidden overflow-hidden">
-              <div className="flex flex-col gap-4 pt-4 pb-2">
-                {navLinks.map(link => <Link key={link.path} to={link.path} onClick={() => setMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${isActive(link.path) ? 'text-amber-700' : 'text-gray-700 hover:text-amber-700'}`}>
-                    {link.label}
-                  </Link>)}
-              </div>
-            </motion.div>}
-        </AnimatePresence>
-      </nav>
-    </header>;
+      </div>
+    </header>
+  );
 };
+
 export default Header;

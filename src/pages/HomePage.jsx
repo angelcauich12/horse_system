@@ -1,178 +1,237 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation, Mousewheel } from 'swiper/modules';
 import { motion } from 'framer-motion';
-import { ArrowRight, Award, Heart, Star } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import HorseCard from '@/components/HorseCard';
+import { ChevronDown } from 'lucide-react';
+
+// Estilos
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import horsesData from '@/data/horsesData';
-import { Button } from '@/components/ui/button';
 
 const HomePage = () => {
-  // Now displaying all 4 horses as featured, since the data set is small and focused
-  const featuredHorses = horsesData.slice(0, 4);
-
   return (
     <>
-      <Helmet>
-        <title>Hacienda - Caballos de Excelencia | Criadores desde 1985</title>
-        <meta name="description" content="Descubre caballos de raza excepcional en Hacienda. Criadores especializados en Quarter Horse, Thoroughbred, Arabian y más. Visita nuestro catálogo." />
-      </Helmet>
+      <Header />
 
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-        <Header />
+      {/* Contenedor principal del Swiper: Ocupa toda la pantalla */}
+      <main className="h-screen w-full bg-white">
+        <Swiper
+          direction={'horizontal'}
+          slidesPerView={1}
+          spaceBetween={0}
+          pagination={{ clickable: true }}
+          navigation={true}
+          modules={[Pagination, Navigation, Mousewheel]}
+          className="h-full w-full"
+        >
+          {horsesData.map((horse, index) => (
+            <SwiperSlide key={index} className="overflow-y-auto overflow-x-hidden custom-scrollbar">
 
-        {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden mt-16">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.unsplash.com/photo-1662664670865-4f0fa65bbad3"
-              alt="Beautiful horse ranch with horses grazing in golden sunset"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Caballos de <span className="text-amber-400">Excelencia</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed">
-              Criadores apasionados desde 1985. Descubre nuestra selección de caballos de raza pura, entrenados con dedicación y amor.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 w-full px-6">
-              <Link to="/catalogo" className="w-full sm:w-auto flex justify-center">
-                <Button className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-6 text-lg font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2">
-                 Ver Catálogo
-                </Button>
-              </Link>
-              <Link to="/contacto" className="w-full sm:w-auto flex justify-center">
-                <Button className="bg-white hover:bg-gray-100 text-amber-900 px-8 py-6 text-lg font-semibold rounded-lg transition-all hover:scale-105">
-                  Contactar
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Welcome Message */}
-        <section className="py-20 px-4">
-          <div className="container mx-auto max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Bienvenido a Hacienda
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                En Hacienda, nos dedicamos a la cría y entrenamiento de caballos excepcionales. Con más de 35 años de experiencia, ofrecemos ejemplares de las mejores razas, criados con pasión y cuidado profesional. Cada caballo en nuestra hacienda recibe atención personalizada y entrenamiento de alta calidad.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                <div className="space-y-3">
-                  <Award className="w-12 h-12 text-amber-600 mx-auto" />
-                  <h3 className="text-xl font-bold text-gray-900">Calidad Superior</h3>
-                  <p className="text-gray-600">Caballos de pedigrí certificado</p>
+              {/* SECCIÓN 1: HERO (IMAGEN FULL SCREEN) */}
+              <section className="relative h-screen w-full flex-shrink-0">
+                <div className="absolute inset-0">
+                  <img
+                    src={horse.image}
+                    alt={horse.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
                 </div>
-                <div className="space-y-3">
-                  <Heart className="w-12 h-12 text-amber-600 mx-auto" />
-                  <h3 className="text-xl font-bold text-gray-900">Cuidado Dedicado</h3>
-                  <p className="text-gray-600">Atención personalizada diaria</p>
+
+                <div className="relative h-full flex flex-col justify-end pb-32 px-6 md:px-20">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <h2 className="text-6xl md:text-8xl font-serif text-white mb-4 italic leading-tight">
+                      {horse.name}
+                    </h2>
+                    <p className="text-xl md:text-2xl text-gray-200 max-w-xl font-light tracking-wide">
+                      {horse.subtitle}
+                    </p>
+                  </motion.div>
                 </div>
-                <div className="space-y-3">
-                  <Star className="w-12 h-12 text-amber-600 mx-auto" />
-                  <h3 className="text-xl font-bold text-gray-900">35+ Años</h3>
-                  <p className="text-gray-600">De experiencia en el sector</p>
+
+                {/* Indicador para bajar (Visual de Stitch) */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 animate-pulse flex flex-col items-center gap-2">
+                  <span className="text-[10px] tracking-[0.3em] uppercase">Scroll Info</span>
+                  <ChevronDown size={20} />
                 </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+              </section>
 
-        {/* Featured Horses */}
-        <section className="py-20 px-4 bg-gradient-to-b from-white to-amber-50">
-          <div className="container mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Caballos Destacados
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Descubre nuestra selección de caballos premium, cada uno con características excepcionales y entrenamiento profesional.
-              </p>
-            </motion.div>
+              {/* SECCIÓN 2: INTRODUCCIÓN (EL DISEÑO DE TU IMAGEN) */}
+              <section className="bg-white py-24 px-6 md:px-20 border-t border-gray-100">
+                <div className="max-w-7xl mx-auto">
 
-            {/* Optimized grid for 4 items: 1 column on mobile, 2 columns on desktop/larger */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {featuredHorses.map((horse, index) => (
-                <motion.div
-                  key={horse.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <HorseCard horse={horse} />
-                </motion.div>
-              ))}
-            </div>
+                  {/* Texto Superior */}
+                  <div className="mb-20">
+                    <span className="text-[15px] tracking-[0.3em] uppercase text-amber-600 font-bold mb-6 block">
+                      Introduction
+                    </span>
+                    <h3 className="text-4xl md:text-6xl font-serif text-slate-900 mb-8 leading-tight">
+                      A Legacy in the Making
+                    </h3>
+                    <p className="text-lg md:text-2xl text-slate-500 max-w-4xl leading-relaxed font-light">
+                      {horse.description}
+                    </p>
+                  </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-center mt-12"
-            >
-              <Link to="/catalogo">
-                <Button className="bg-amber-700 hover:bg-amber-800 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2 mx-auto">
-                  Ver Catálogo Completo
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
+                  {/* Grid de Especificaciones Estilo Stitch */}
+                  <div className="bg-[#F8F8F8] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-10 py-12 px-10 rounded-sm">
+                    {[
+                      { label: "Name", value: horse.name },
+                      { label: "Year", value: horse.year || "2021" },
+                      { label: "Sex", value: horse.sex || "Gelding" },
+                      { label: "Color", value: horse.color || "Bay" },
+                      { label: "Registry", value: horse.registry || "SLS" },
+                      { label: "Discipline", value: horse.discipline || "Show Jumping" }
+                    ].map((item, i) => (
+                      <div key={i} className="border-l border-gray-300 pl-6 h-fit">
+                        <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400 block mb-2 font-medium">
+                          {item.label}
+                        </span>
+                        <span className="text-lg font-bold text-slate-900 tracking-tight">
+                          {item.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
 
-        {/* Call to Action */}
-        <section className="py-20 px-4 bg-gradient-to-r from-amber-700 to-amber-900 text-white">
-          <div className="container mx-auto max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                ¿Buscas tu Compañero Perfecto?
-              </h2>
-              <p className="text-xl mb-8 text-amber-100">
-                Nuestro equipo está listo para ayudarte a encontrar el caballo ideal para ti. Contáctanos hoy y comienza tu aventura ecuestre.
-              </p>
-              <Link to="/contacto">
-                <Button className="bg-white hover:bg-gray-100 text-amber-900 px-8 py-4 text-lg font-semibold rounded-lg transition-all hover:scale-105">
-                  Contáctanos Ahora
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
 
-        <Footer />
-      </div>
+              {/* --- SECCIÓN LINAJE (EL ÁRBOL) --- */}
+              <section className="bg-[#F9FAFB] py-24 px-6 md:px-20">
+                <div className="max-w-5xl mx-auto">
+                  <h3 className="text-center text-3xl font-serif text-slate-800 mb-16">Elite Lineage</h3>
+
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-8 relative">
+
+                    {/* Subject (El Caballo Actual) */}
+                    <div className="bg-white p-8 shadow-sm border border-slate-100 w-full max-w-[280px] text-center">
+                      <span className="text-[10px] tracking-widest uppercase text-amber-600 block mb-2">Subject</span>
+                      <h4 className="text-xl font-serif text-slate-900 uppercase tracking-tight">{horse.name}</h4>
+                    </div>
+
+                    {/* Línea conectora (Solo visible en desktop) */}
+                    <div className="hidden md:block w-12 h-[1px] bg-slate-300"></div>
+
+                    {/* Padres (Sire & Dam) */}
+                    <div className="flex flex-col gap-6 w-full max-w-[320px]">
+                      {/* Padre */}
+                      <div className="bg-white p-6 shadow-sm border border-slate-100">
+                        <span className="text-[10px] tracking-widest uppercase text-slate-400 block mb-1">Sire</span>
+                        <h4 className="text-lg font-serif text-slate-900 uppercase mb-1">{horse.sire || "Órale La Hacienda"}</h4>
+                        <p className="text-[11px] text-slate-500 uppercase tracking-wide">Dallas VDL Line — Power, Technique, Reach</p>
+                      </div>
+
+                      {/* Madre */}
+                      <div className="bg-white p-6 shadow-sm border border-slate-100">
+                        <span className="text-[10px] tracking-widest uppercase text-slate-400 block mb-1">Dam</span>
+                        <h4 className="text-lg font-serif text-slate-900 uppercase mb-1">{horse.dam || "Dale La Hacienda"}</h4>
+                        <p className="text-[11px] text-slate-500 uppercase tracking-wide">1.40m Performance — Darco Line: Courage & Consistency</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* --- SECCIÓN ATHLETIC COMPOSITION (BLOQUE NEGRO) --- */}
+              <section className="bg-black py-24 px-6 md:px-20 overflow-hidden relative">
+                {/* Icono de medalla de fondo (opaco) */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-10 pointer-events-none">
+                  <svg width="400" height="400" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1">
+                    <path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
+                    <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
+                    <path d="m12 7 1.1 2.22 2.45.35-1.77 1.73.42 2.44L12 12.6l-2.2 1.15.42-2.44-1.77-1.73 2.45-.35L12 7z" />
+                  </svg>
+                </div>
+
+                <div className="max-w-5xl mx-auto relative z-10">
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-amber-500 font-bold mb-6 block">
+                    Genetic Blueprint
+                  </span>
+
+                  <h2 className="text-4xl md:text-5xl font-serif text-white mb-8 leading-tight italic">
+                    Superior Athletic Composition
+                  </h2>
+
+                  <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed mb-12">
+                    The intersection of the Dallas VDL line's scope and the Darco line's renowned intelligence
+                    creates a prospect with unrivaled potential. {horse.name} represents a carefully curated
+                    synthesis of strength, refined technique, and proven competitive performance.
+                  </p>
+
+                  {/* Tags de Atributos */}
+                  <div className="flex flex-wrap gap-4">
+                    {["Strength", "Technique", "Performance"].map((tag) => (
+                      <span
+                        key={tag}
+                        className="border border-white/30 px-6 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:border-white transition-colors cursor-default"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+
+              {/* --- SECCIÓN VISUAL ARCHIVE --- */}
+              <section className="bg-white py-24 px-6 md:px-20">
+                <div className="max-w-7xl mx-auto">
+
+                  {/* Encabezado de la Galería */}
+                  <div className="flex justify-between items-end mb-12 border-b border-slate-100 pb-6">
+                    <h3 className="text-3xl font-serif text-slate-900">
+                      Visual Archive
+                    </h3>
+                    <span className="text-[10px] tracking-[0.2em] uppercase text-slate-400 font-medium">
+                      {horse.gallery.length} Plates Featured
+                    </span>
+                  </div>
+
+                  {/* Grid de Imágenes */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {horse.gallery.map((img, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="group relative  overflow-hidden bg-slate-100"
+                      >
+                        <img
+                          src={img}
+                          alt={`${horse.name} detail ${index + 1}`}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+
+                        {/* Overlay sutil al hacer hover (estilo premium) */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+                  
+
+
+              {/* Footer dentro del slide para que sea el final de la página del caballo */}
+              <Footer />
+
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </main>
     </>
   );
 };
